@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+	  <add id="Kinex_CustomGrid::kinex" title="Kinex" translate="title" module="Kinex_CustomGrid" sortOrder="40" dependsOnModule="Kinex_CustomGrid" resource="Kinex_CustomGrid::kinex"/>
+
+	  <add id="Kinex_CustomGrid::customgrid" title="CustomGrid" translate="title" module="Kinex_CustomGrid" parent="Kinex_CustomGrid::kinex" sortOrder="40" dependsOnModule="Kinex_CustomGrid" resource="Kinex_CustomGrid::customgrid"/>
+
+	  <add id="Kinex_CustomGrid::customgrid_all" title="All Grids" translate="title" module="Kinex_CustomGrid" parent="Kinex_CustomGrid::customgrid" sortOrder="10" dependsOnModule="Kinex_CustomGrid" action="customgrid/allgrids" resource="Kinex_CustomGrid::customgrid_all"/>
+	
+	  <add id="Kinex_CustomGrid::crud" title="Crud" translate="title" module="Kinex_CustomGrid" parent="Kinex_CustomGrid::customgrid_all" sortOrder="20" dependsOnModule="Kinex_CustomGrid" action="customgrid/crud" resource="Kinex_CustomGrid::crud"/> 
+
+	 <add id="Kinex_CustomGrid::sittings" title="Settings" translate="title" module="Kinex_CustomGrid" parent="Kinex_CustomGrid::kinex" sortOrder="60" dependsOnModule="Kinex_CustomGrid" resource="Kinex_CustomGrid::sittings"/>
+
+     <add id="Kinex_CustomGrid::grid_config" title="Configuration" translate="title" module="Kinex_CustomGrid" parent="Kinex_CustomGrid::sittings" sortOrder="10" dependsOnModule="Kinex_CustomGrid" action="admin/system_config/edit/section/kinex_customgrid" resource="Kinex_CustomGrid::grid_config"/>
+	</menu>
+</config> 

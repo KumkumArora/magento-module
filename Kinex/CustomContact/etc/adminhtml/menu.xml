@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+    <add id="Kinex_CustomContact::contact_us" title="Contact Us" translate="title" module="Kinex_CustomContact" parent="Kinex_CustomGrid::grid_config" sortOrder="20" dependsOnModule="Kinex_CustomGrid" action="customcontact/contactus" resource="Kinex_CustomContact::contact_us"/>
+	</menu>
+</config> 

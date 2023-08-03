@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+<template id="email_demo_template" label="This is email demo" file="email_demo_template.html" type="html" module="Kinex_CustomModule" area="frontend"/>
+
+<template id="email_demo_contact" label="This is contact reply mail" file="email_demo_contact.html" type="html" module="Kinex_CustomModule" area="frontend"/>
+
+<template id="email_demo_order" label="This is order email" file="email_demo_order.html" type="html" module="Kinex_CustomModule" area="frontend"/>
+</config>

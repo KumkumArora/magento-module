@@ -1,0 +1,27 @@
+<div class="rsgitech-news">
+	<?php $allgrids = $this->getListGrids() ?>
+	<?php if($allgrids && count($allgrids)): ?>
+		<?php foreach($allgrids as $grids): ?>
+			<div class="rsg-news-list">
+				<div class="rsg-news-title">
+					<a href="<?php echo $block->getBaseUrl() ?>customgrid/index/view/?id=<?php echo $grids->getId(); ?>">
+						<?php echo $grids->getTitle();?>
+					</a>
+					</div>
+				<div class="rsg-news-time"><?php echo $grids->getCreatedAt() ?></div>
+				<div class="rsg-news-desc"><?php echo $grids->getDescription() ?></div>
+				<div class="rsg-news-desc ">
+					<a href="<?php echo $block->getBaseUrl() ?>customgrid/index/delete/?id=<?php echo $grids->getId(); ?>">Delete</a>
+			    </div>
+			</div>
+		<?php endforeach; ?>
+		
+		<?php if($this->getPagerHtml()): ?>
+			<?php echo $this->getPagerHtml(); ?>
+		<?php endif; ?>
+	<?php else: ?>
+		<div class="rsgitech-no-records">
+			<?php echo __('Grids not available'); ?>
+		</div>
+	<?php endif; ?>
+</div>

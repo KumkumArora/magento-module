@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+	<acl>
+		<resources>
+			<resource id="Magento_Backend::admin">
+				<resource id="Kinex_CustomGrid::kinex" title="Kinex" sortOrder="51">
+				  <resource id="Kinex_CustomGrid::customgrid" title="customgrid" sortOrder="10">
+					<resource id="Kinex_CustomGrid::customgrid_all" title="All Grids" sortOrder="20">
+						<resource id="Kinex_CustomGrid::save" title="Save Grids" translate="title" sortOrder="10" />
+						<resource id="Kinex_CustomGrid::grids_delete" title="Delete Grids" translate="title" sortOrder="20" />
+					</resource>
+					<resource id="Kinex_CustomGrid::crud" title="Crud" sortOrder="30">
+					</resource>
+				  </resource>
+				</resource>
+				<resource id="Magento_Backend::stores">
+					<resource id="Magento_Backend::stores_settings">
+						<resource id="Magento_Config::config">
+							<resource id="Kinex_CustomGrid::grid_config" title="Kinex CustomGrid" translate="title"/>
+						</resource>
+					</resource>
+				</resource>
+			</resource>
+		</resources>
+	</acl>
+</config>

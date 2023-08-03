@@ -1,0 +1,15 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+
+
+<?php /** @var $block \Magento\Catalog\Block\Product\AbstractProduct */ ?>
+
+<?php  $product = $block->getProduct();?>
+<?php if($product->getData('Product_availability') != 0) : ?>
+<h3 style="color:Red;"><strong><?= $product->getData('add_offer_Tag'); ?></strong></h3>
+<?= $block->getReviewsSummaryHtml($block->getProduct(), false, true) ?>
+<?php endif; ?>

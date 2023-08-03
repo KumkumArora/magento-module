@@ -1,0 +1,18 @@
+
+<!--@subject A new Order @-->
+ 
+{{template config_path="design/email/header_template"}}
+<table>
+     <tr class="email-intro">
+         <td>
+           you have received new order ... from <b>{{var customerName}}</b><br />
+           <strong>Order No : 0000000{{var orderid}}</strong>
+           <br/>
+           Product Name : {{var productname}} <br/>
+           Product Sku  : {{var productsku}}<br/>
+           total        : <strong>{{var total}}</strong>
+         </td>
+     </tr>
+    
+ </table>
+{{template config_path="design/email/footer_template"}}

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="kinex" translate="label" sortOrder="250">
+            <label>Kinex</label>
+        </tab>
+        <section id="kinex_customgrid" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>kinex-separator</class>
+            <label>Grids</label>
+            <tab>kinex</tab>
+            <resource>Kinex_CustomGrid::grid_config</resource>
+            <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Module Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+			<group id="storefront" translate="label" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Storefront</label>
+                <field id="grid_link" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Grids Link</label>
+                    <comment>This is grids link</comment>
+                </field>    
+                <field id="set_limit" translate="label" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Set The Number of Limit</label>
+                    <comment>Set the number of limit for showing latest grid</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

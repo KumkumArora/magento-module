@@ -1,0 +1,22 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+      <preference for="Magento\Contact\Controller\Index\Post" type="Kinex\CustomContact\Controller\Index\Post" />
+
+    <virtualType name="ContactusDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Kinex\CustomContact\Model\ResourceModel\Contact\Collection</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="kinex_customcontact_contactus_listing_data_source" xsi:type="string">Kinex\CustomContact\Model\ResourceModel\Contact\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Kinex\CustomContact\Model\ResourceModel\Contact\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">contact_us</argument>
+            <argument name="resourceModel" xsi:type="string">Kinex\CustomContact\Model\ResourceModel\Contactus</argument>
+        </arguments>
+    </type>
+</config>
