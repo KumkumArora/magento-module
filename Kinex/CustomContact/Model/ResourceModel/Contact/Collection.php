@@ -6,6 +6,10 @@ use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 class Collection extends AbstractCollection
 {
     protected $_idFieldName = 'entity_id';
+
+    protected $_eventPrefix = 'Kinex_CustomContact_grid_collection';
+
+    protected $_eventObject = 'Kinex_CustomContact_collection';
 	
 	/**
      * Define model & resource model

@@ -15,6 +15,10 @@
                     <label>Module Enable</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="custom_value" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Custom Value</label>
+                    <comment>Enter custom value which you want to add in Product order total.</comment>
+                </field>    
             </group>
 			<group id="storefront" translate="label" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Storefront</label>

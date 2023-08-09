@@ -1,0 +1,46 @@
+<?php
+
+/** @var \Magento\Customer\Block\Adminhtml\Edit\Tab\View\PersonalInfo $block */
+
+$lastLoginDateAdmin = $block->getLastLoginDate();
+$lastLoginDateStore = $block->getStoreLastLoginDate();
+
+$createDateAdmin = $block->getCreateDate();
+$createDateStore = $block->getStoreCreateDate();
+$allowedAddressHtmlTags = ['b', 'br', 'em', 'i', 'li', 'ol', 'p', 'strong', 'sub', 'sup', 'ul'];
+?>
+
+<button><a href="<?php echo $block->getUrl('customcontact/contactus/index'); ?>"><?php echo __('Go Back') ?></a></button>
+<div class="fieldset-wrapper customer-information">
+    <div class="fieldset-wrapper-title">
+        <span class="title"><?= $block->escapeHtml(__('Customer Contactus Query Details')) ?></span>
+    </div>
+    <table class="admin__table-secondary">
+        <tbody>
+        <?php $contact = $this->getContactquery() ?>
+        <tr>
+            <th><?= $block->escapeHtml(__('Name:')) ?></th>
+            <td><?php echo $contact->getName() ?></td>
+        </tr>
+        <tr>
+            <th><?= $block->escapeHtml(__('Email:')) ?></th>
+            <td><?php echo $contact->getEmail() ?></td>
+        </tr>
+        <tr>
+            <th><?= $block->escapeHtml(__('Phone Number :')) ?></th>
+            <td><?php echo $contact->getPhoneNumber() ?></td>
+        </tr>
+        <tr>
+            <th><?= $block->escapeHtml(__('Subject:')) ?></th>
+            <td><?php echo $contact->getSubject() ?></td>
+        </tr><tr>
+            <th><?= $block->escapeHtml(__('Description:')) ?></th>
+            <td><?php echo $contact->getComments() ?></td>
+        </tr>
+        
+        </tbody>
+    </table>
+
+</div>
+
+

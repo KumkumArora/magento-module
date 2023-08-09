@@ -16,6 +16,8 @@
     <type name="Kinex\CustomContact\Model\ResourceModel\Contact\Grid\Collection">
         <arguments>
             <argument name="mainTable" xsi:type="string">contact_us</argument>
+            <argument name="eventPrefix" xsi:type="string">Kinex_CustomContact_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">Kinex_CustomContact_collection</argument>
             <argument name="resourceModel" xsi:type="string">Kinex\CustomContact\Model\ResourceModel\Contactus</argument>
         </arguments>
     </type>

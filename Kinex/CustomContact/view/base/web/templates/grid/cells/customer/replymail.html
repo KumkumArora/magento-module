@@ -1,7 +1,7 @@
 <form id="send-mail-form-<%- customerid %>" method="get" enctype="multipart/form-data" action="<%- formaction %>">
     <div class="modal-body">
         <div class="bootbox-body">
-            <textarea class="bootbox-input bootbox-input-text form-control required-entry" name="send_message" rows="4" cols="83"></textarea>
+            <textarea class="bootbox-input bootbox-input-text form-control required-entry" name="send_message" rows="4" cols="83" required></textarea>
             <input type="hidden" name="entity_id" value="<%- customerid %>">         
         </div>
     </div>

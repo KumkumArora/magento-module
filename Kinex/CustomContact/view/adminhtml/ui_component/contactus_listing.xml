@@ -6,7 +6,6 @@
         </item>
         <item name="spinner" xsi:type="string">spinner_columns</item>
     </argument>
-
     <dataSource name="ContactusDataProvider">
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider</argument>
@@ -24,29 +23,41 @@
             </argument>
         </argument>
     </dataSource>
-
-    <listingToolbar name="listing_top">
-        <massaction name="listing_massaction">
+   <listingToolbar name="listing_top">
+		<bookmark name="bookmarks"/>
+		<columnsControls name="columns_controls" />
+		<filterSearch name="fulltext"/>
+		<filters name="listing_filters">
             <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="component" xsi:type="string">Magento_Ui/js/grid/tree-massactions</item>
+                <item name="observers" xsi:type="array">
+                    <item name="column" xsi:type="string">column</item>
                 </item>
             </argument>
-            <action name="custom_action">
-                <argument name="data" xsi:type="array">
-                    <item name="config" xsi:type="array">
-                        <item name="type" xsi:type="string">custom_action</item>
-                        <item name="label" xsi:type="string" translate="true">Custom action</item>
-                        <item name="url" xsi:type="url" path="pandagroup_myadmincontroller/blog"/>
-                        <!-- <item name="url" xsi:type="url" path="pandagroup_myadmincontroller/blog/customAction"/> -->
-                        <item name="confirm" xsi:type="array">
-                            <item name="title" xsi:type="string" translate="true">Make something with selected.</item>
-                            <item name="message" xsi:type="string" translate="true">Are you sure?</item>
-                        </item>
-                    </item>
-                </argument>
+            <settings>
+                <templates>
+                    <filters>
+                        <select>
+                            <param name="template" xsi:type="string">ui/grid/filters/elements/ui-select</param>
+                            <param name="component" xsi:type="string">Magento_Ui/js/form/element/ui-select</param>
+                        </select>
+                    </filters>
+                </templates>
+            </settings>
+        </filters>
+		<massaction name="listing_massaction">
+            <action name="delete">
+                <settings>
+                    <confirm>
+                        <message translate="true">Are you sure you want to delete selected items?</message>
+                        <title translate="true">Delete items</title>
+                    </confirm>
+                    <url path="customcontact/contactus/massDelete"/>
+                    <type>delete</type>
+                    <label translate="true">Delete</label>
+                </settings>
             </action>
         </massaction>
+		<paging name="listing_paging"/>
     </listingToolbar>
     <columns name="spinner_columns">
         <selectionsColumn name="ids">
@@ -112,7 +123,6 @@
                 </item>
             </argument>
         </column>
-
         <actionsColumn name="send_mail" class="Kinex\CustomContact\Ui\Component\Listing\Column\SendMailPopup">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -123,6 +133,13 @@
                     <item name="sortOrder" xsi:type="number">13</item>
                 </item>
             </argument>
+        </actionsColumn>
+        <actionsColumn name="actions" class="Kinex\CustomContact\Ui\Component\Listing\Column\ContactActions">
+            <settings>
+                <indexField>entity_id</indexField>
+                <resizeEnabled>false</resizeEnabled>
+                <resizeDefaultWidth>107</resizeDefaultWidth>
+            </settings>
         </actionsColumn>
     </columns>
 </listing>
