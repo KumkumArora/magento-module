@@ -106,6 +106,14 @@
 															<item name="sortOrder" xsi:type="string">
 																3
 															</item>
+															<item name="validation" xsi:type="array">
+																<item name="validate-special-characters" xsi:type="string">
+																	true
+																</item>
+																<item name="required-entry" xsi:type="string">
+																	true
+																</item>
+															</item>
 														</item>
 														<item name="select_field" xsi:type="array">
 															<item name="component" xsi:type="string">
@@ -149,7 +157,7 @@
 															</item>
 															<!-- value element allows to specify default value of the form field -->
 															<item name="value" xsi:type="string">
-																value_2
+																Please select value
 															</item>
 															<item name="provider" xsi:type="string">
 																checkoutProvider

@@ -47,13 +47,6 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 ['nullable' => false, 'default' => ''],
                 'Select'
             )
-            ->addColumn(
-              'checkout_field',
-              Table::TYPE_SMALLINT,
-              null,
-              ['nullable' => false, 'default' => 0],
-              'Checkout'
-           ) 
            ->addColumn(
              'date_field',
              Table::TYPE_DATETIME,
@@ -93,17 +86,6 @@ class UpgradeSchema implements UpgradeSchemaInterface
             ]
         );
 
-        $table = $installer->getConnection()->addColumn(
-            $installer->getTable('quote_item'),
-            'text_field',
-            [
-                'type' => Table::TYPE_TEXT,
-                'length' => 255,
-                'nullable' => true,
-                'default' => '',
-                'comment' => 'Text'
-            ]
-        );
       }
 
       if(version_compare($context->getVersion(), '1.2.2', '<')) {
@@ -132,8 +114,46 @@ class UpgradeSchema implements UpgradeSchemaInterface
             ]
         );
 
+
         $table = $installer->getConnection()->addColumn(
-            $installer->getTable('quote_item'),
+            $installer->getTable('sales_order'),
+            'date_field',
+            [
+                'type' => Table::TYPE_DATETIME,
+                'length' => 255,
+                'nullable' => true,
+                'comment' => 'Date'
+            ]
+        );
+
+        $table = $installer->getConnection()->addColumn(
+            $installer->getTable('sales_order_grid'),
+            'date_field',
+            [
+                'type' => Table::TYPE_DATETIME,
+                'length' => 255,
+                'nullable' => true,
+                'comment' => 'Date'
+            ]
+        );
+
+      }
+
+      if(version_compare($context->getVersion(), '1.2.3', '<')) {
+
+        $table = $installer->getConnection()->addColumn(
+            $installer->getTable('quote'),
+            'date_field',
+            [
+                'type' => Table::TYPE_DATETIME,
+                'length' => 255,
+                'nullable' => true,
+                'comment' => 'Date'
+            ]
+        );
+
+        $table = $installer->getConnection()->addColumn(
+            $installer->getTable('quote'),
             'select_field',
             [
                 'type' => Table::TYPE_TEXT,
@@ -145,75 +165,62 @@ class UpgradeSchema implements UpgradeSchemaInterface
         );
 
         $table = $installer->getConnection()->addColumn(
-            $installer->getTable('sales_order'),
-            'date_field',
+            $installer->getTable('quote'),
+            'text_field',
             [
-                'type' => Table::TYPE_DATETIME,
+                'type' => Table::TYPE_TEXT,
                 'length' => 255,
                 'nullable' => true,
-                'comment' => 'Date'
+                'default' => '',
+                'comment' => 'Text'
             ]
         );
 
-        $table = $installer->getConnection()->addColumn(
-            $installer->getTable('sales_order_grid'),
-            'date_field',
-            [
-                'type' => Table::TYPE_DATETIME,
-                'length' => 255,
-                'nullable' => true,
-                'comment' => 'Date'
-            ]
-        );
+      } 
 
-        $table = $installer->getConnection()->addColumn(
-            $installer->getTable('quote_item'),
-            'date_field',
-            [
-                'type' => Table::TYPE_DATETIME,
-                'length' => 255,
-                'nullable' => true,
-                'comment' => 'Date'
-            ]
-        );
+      if(version_compare($context->getVersion(), '1.2.5', '<')) {
 
+            $table = $installer->getConnection()->addColumn(
+                $installer->getTable('quote'),
+                'checkbox_field',
+                [
+                    'type' => Table::TYPE_TEXT,
+                    'nullable' => false,
+                    'comment' => 'Checkbox'
+                ]
+            );
+    
+            $table = $installer->getConnection()->addColumn(
+                $installer->getTable('sales_order'),
+                'checkbox_field',
+                [
+                    'type' => Table::TYPE_TEXT,
+                    'nullable' => false,
+                    'comment' => 'Checkbox'
+                ]
+            );
+    
+            $table = $installer->getConnection()->addColumn(
+                $installer->getTable('sales_order_grid'),
+                'checkbox_field',
+                [
+                    'type' => Table::TYPE_TEXT,
+                    'nullable' => false,
+                    'comment' => 'Checkbox'
+                ]
+            );
+    
+            $table = $installer->getConnection()->addColumn(
+                $installer->getTable('custom_checkout'),
+                'checkbox_field',
+                [
+                    'type' => Table::TYPE_TEXT,
+                    'nullable' => false,
+                    'comment' => 'Checkbox'
+                ]
+            );
+        }
 
-        $table = $installer->getConnection()->addColumn(
-            $installer->getTable('sales_order'),
-            'checkout_field',
-            [
-                'type' => Table::TYPE_SMALLINT,
-                'length' => 11,
-                'nullable' => true,
-                'default' => 0,
-                'comment' => 'Checkout'
-            ]
-        );
-
-        $table = $installer->getConnection()->addColumn(
-            $installer->getTable('sales_order_grid'),
-            'checkout_field',
-            [
-                'type' => Table::TYPE_SMALLINT,
-                'length' => 11,
-                'nullable' => true,
-                'default' => 0,
-                'comment' => 'Checkout'
-            ]
-        );
-
-        $table = $installer->getConnection()->addColumn(
-            $installer->getTable('quote_item'),
-            'checkout_field',
-            [
-                'type' => Table::TYPE_SMALLINT,
-                'length' => 11,
-                'nullable' => true,
-                'default' => 0,
-                'comment' => 'Checkout'
-            ]
-        );
-      }
         $installer->endSetup();
     }
 }
