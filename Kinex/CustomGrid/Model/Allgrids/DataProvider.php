@@ -3,6 +3,7 @@
 
  use Kinex\CustomGrid\Model\ResourceModel\Allgrids\CollectionFactory; 
  use Magento\Framework\App\Request\DataPersistorInterface;
+ use Magento\Store\Model\StoreManagerInterface; 
 
  /** 
   * Class DataProvider 
@@ -41,10 +42,13 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         $requestFieldName, 
         CollectionFactory $allgridsCollectionFactory, 
         DataPersistorInterface $dataPersistor, 
+        StoreManagerInterface $storeManager,
         array $meta = [], 
         array $data = [] 
     ){ 
-        $this->collection = $allgridsCollectionFactory->create(); $this->dataPersistor = $dataPersistor; 
+        $this->collection = $allgridsCollectionFactory->create(); 
+        $this->storeManager = $storeManager;
+        $this->dataPersistor = $dataPersistor; 
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
         $this->meta = $this->prepareMeta($this->meta); 
     }
@@ -75,6 +79,12 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         foreach($items as $tabledata)
         {
             $this->loadedData[$tabledata->getId()] = $tabledata->getData();
+            if ($tabledata->getImageField()) {
+                $m['image_field'][0]['name'] = $tabledata->getImageField();
+                $m['image_field'][0]['url'] = $this->getMediaUrl($tabledata->getImageField());
+                $fullData = $this->loadedData;
+                $this->loadedData[$tabledata->getId()] = array_merge($fullData[$tabledata->getId()], $m);
+            }
         }
         $data = $this->dataPersistor->get('kinex_customgrid');
         if(!empty($data))
@@ -85,6 +95,12 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             $this->dataPersistor->clear('kinex_customgrid');
         }
         return $this->loadedData;
+    }
+
+    public function getMediaUrl($path = '')
+    {
+        $mediaUrl = $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'wysiwyg/helloworld/' . $path;
+        return $mediaUrl;
     }
 
         

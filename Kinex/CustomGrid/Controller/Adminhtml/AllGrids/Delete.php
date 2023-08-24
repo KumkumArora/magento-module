@@ -1,9 +1,27 @@
 <?php
 
 namespace Kinex\CustomGrid\Controller\Adminhtml\Allgrids;
+use Magento\Framework\Filesystem;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\Filesystem\Driver\File;
+use Magento\Framework\App\Filesystem\DirectoryList;
 
 class Delete extends \Magento\Backend\App\Action
 {
+
+    protected $_filesystem;
+    protected $_file;
+
+    public function __construct(
+        Context $context,
+        Filesystem $_filesystem,
+        File $file
+    )
+    {
+        parent::__construct($context);
+        $this->_filesystem = $_filesystem;
+        $this->_file = $file;
+    }
     /**
      * Authorization level
      *
@@ -33,6 +51,14 @@ class Delete extends \Magento\Backend\App\Action
                 $model->load($id);
                 $title = $model->getTitle();
                 $model->delete();
+                
+                // delete image from directory
+                $fileName = $model['image_field'];
+                $mediaRootDir = $this->_filesystem->getDirectoryRead(DirectoryList::MEDIA)->getAbsolutePath(). 'wysiwyg/helloworld/' ;
+                if ($this->_file->isExists($mediaRootDir . $fileName)) {
+                $this->_file->deleteFile($mediaRootDir . $fileName);
+                }
+
                 // display success message
                 $this->messageManager->addSuccess(__('The grids has been deleted.'));
                 // go to grid

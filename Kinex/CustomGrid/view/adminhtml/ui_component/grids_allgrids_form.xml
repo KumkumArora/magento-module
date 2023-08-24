@@ -93,8 +93,33 @@
                 <dataScope>title</dataScope>
             </settings>
         </field>
-    </fieldset>
-    <fieldset name="content" sortOrder="10">
+        <field name="image_field">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                <item name="dataType" xsi:type="string">string</item>
+                <item name="label" xsi:type="string" translate="true">Your Image Field</item>
+                <item name="visible" xsi:type="boolean">true</item>
+                <item name="allowedExtensions" xsi:type="string">jpg jpeg png</item>
+                <item name="maxFileSize" xsi:type="number">2097152</item>
+                <item name="formElement" xsi:type="string">imageUploader</item>
+                <item name="previewTmpl" xsi:type="string">Magento_Catalog/image-preview</item>
+                <item name="elementTmpl" xsi:type="string">ui/form/element/uploader/uploader</item>
+                <item name="dataScope" xsi:type="string">image_field</item>
+                <item name="sortOrder" xsi:type="number">40</item>
+                <item name="uploaderConfig" xsi:type="array">
+                <item name="url" xsi:type="url" path="customgrid/allgrids/upload">
+                    <param name="target_element_id">image_field</param> 
+                    <param name="type">image</param>
+                </item>
+                 </item>
+              <item name="validation" xsi:type="array">
+                  <item name="required-entry" xsi:type="boolean">true</item>
+               </item>
+               </item>
+            </argument>
+        </field>
+       </fieldset>
+           <fieldset name="content" sortOrder="10">
         <settings>
             <collapsible>true</collapsible>
             <label translate="true">Content</label>
@@ -120,5 +145,5 @@
                 </wysiwyg>
             </formElements>
         </field>
-    </fieldset>
+       </fieldset>
 </form>

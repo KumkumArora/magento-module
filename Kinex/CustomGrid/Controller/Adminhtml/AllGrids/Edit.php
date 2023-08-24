@@ -18,6 +18,8 @@ class Edit extends \Magento\Backend\App\Action
      */
     protected $resultPageFactory;
 
+
+
     /**
      * @param Action\Context $context
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
@@ -28,9 +30,11 @@ class Edit extends \Magento\Backend\App\Action
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Framework\Registry $registry
         
+        
     ) {
         $this->resultPageFactory = $resultPageFactory;
         $this->_coreRegistry = $registry;
+       
         parent::__construct($context);
     }
 	

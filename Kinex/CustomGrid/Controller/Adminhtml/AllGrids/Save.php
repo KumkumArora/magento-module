@@ -4,9 +4,14 @@ namespace Kinex\CustomGrid\Controller\Adminhtml\Allgrids;
 
 use Magento\Backend\App\Action;
 use Kinex\CustomGrid\Model\Allgrids;
+use Kinex\CustomGrid\Model\ImageUploader;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Controller\Result\Redirect;
+use Magento\Framework\App\Cache\Manager;
+use Magento\Framework\Filesystem;
+use Magento\Framework\Filesystem\Driver\File;
+use Magento\Framework\App\Filesystem\DirectoryList;
 
 class Save extends \Magento\Backend\App\Action
 {
@@ -15,29 +20,42 @@ class Save extends \Magento\Backend\App\Action
      */
     protected $dataPersistor;
 
+    
     /**
-     * @var \Kinex\CustomGrid\Model\AllgridsFactory
+     * @var \Kinex\CustomGrid\Model\ImageUploader
      */
-    private $allgridsFactory;
+    private $imageUploaderModel;
 
     /**
      * @var \Kinex\CustomGrid\Api\AllgridsRepositoryInterface
      */
     private $allgridsRepository;
 
+    protected $_filesystem;
+    protected $_file;
+
     /**
      * @param Action\Context $context
      * @param DataPersistorInterface $dataPersistor
+     * @param UrlRewriteFactory $urlRewriteFactory
      * @param \Kinex\CustomGrid\Model\AllgridsFactory $allgridsFactory
      * @param \Kinex\CustomGrid\Api\AllgridsRepositoryInterface $allgridsRepository
      */
     public function __construct(
         Action\Context $context,
         DataPersistorInterface $dataPersistor,
+        ImageUploader $imageUploaderModel,
+        Manager $cacheManager,
+        Filesystem $_filesystem,
+        File $file,
         \Kinex\CustomGrid\Model\AllgridsFactory $allgridsFactory = null,
         \Kinex\CustomGrid\Api\AllgridsRepositoryInterface $allgridsRepository = null
     ) {
         $this->dataPersistor = $dataPersistor;
+        $this->imageUploaderModel = $imageUploaderModel;
+        $this->cacheManager = $cacheManager;
+        $this->_filesystem = $_filesystem;
+        $this->_file = $file;
         $this->allgridsFactory = $allgridsFactory
             ?: \Magento\Framework\App\ObjectManager::getInstance()->get(\Kinex\CustomGrid\Model\AllgridsFactory::class);
         $this->allgridsRepository = $allgridsRepository
@@ -86,9 +104,7 @@ class Save extends \Magento\Backend\App\Action
                     return $resultRedirect->setPath('*/*/');
                 }
             }
-
-            $model->setData($data);
-
+            $model = $this->imageData($model, $data);
             $this->_eventManager->dispatch(
                 'grids_allgrids_prepare_save',
                 ['allgrids' => $model, 'request' => $this->getRequest()]
@@ -112,6 +128,47 @@ class Save extends \Magento\Backend\App\Action
             return $resultRedirect->setPath('*/*/edit', ['grid_id' => $this->getRequest()->getParam('grid_id')]);
         }
         return $resultRedirect->setPath('*/*/');
+    }
+
+    /**
+     * @param $model
+     * @param $data
+     * @return mixed
+     */
+    public function imageData($model, $data)
+    {
+        if ($model->getId()) {
+            $pageData = $this->allgridsFactory->create();
+            $pageData->load($model->getId());
+            if (isset($data['image_field'][0]['name'])) {
+                
+                // Remove old image from directory
+                $oldImage = $pageData['image_field'];
+                $mediaRootDir = $this->_filesystem->getDirectoryRead(DirectoryList::MEDIA)->getAbsolutePath(). 'wysiwyg/helloworld/' ;
+                if ($this->_file->isExists($mediaRootDir . $oldImage)) {
+                $this->_file->deleteFile($mediaRootDir . $oldImage);
+                }
+                $imageName1 = $pageData->getThumbnail();
+                $imageName2 = $data['image_field'][0]['name'];
+                if ($imageName1 != $imageName2) {
+                    $imageUrl = $data['image_field'][0]['url'];
+                    $imageName = $data['image_field'][0]['name'];
+                    $data['image_field'] = $this->imageUploaderModel->saveMediaImage($imageName, $imageUrl);
+                } else {
+                    $data['image_field'] = $data['image_field'][0]['name'];
+                }
+            } else {
+                $data['image_field'] = '';
+            }
+        } else {
+            if (isset($data['image_field'][0]['name'])) {
+                $imageUrl = $data['image_field'][0]['url'];
+                $imageName = $data['image_field'][0]['name'];
+                $data['image_field'] = $this->imageUploaderModel->saveMediaImage($imageName, $imageUrl);
+            }
+        }
+        $model->setData($data);
+        return $model;
     }
 }
 ?>
