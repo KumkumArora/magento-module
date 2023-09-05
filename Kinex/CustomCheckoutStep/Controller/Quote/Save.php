@@ -15,20 +15,22 @@ class Save extends \Magento\Framework\App\Action\Action
         \Psr\Log\LoggerInterface $logger,
         \Magento\Quote\Model\QuoteIdMaskFactory $quoteIdMaskFactory,
         \Magento\Quote\Api\CartRepositoryInterface $quoteRepository,
+        \Kinex\CustomCheckoutStep\Block\Session $block,
         array $data = []
     ) {
         $this->_logger = $logger; 
         $this->quoteRepository = $quoteRepository;
         $this->quoteIdMaskFactory = $quoteIdMaskFactory;
+        $this->block = $block;
         parent::__construct($context,$data);
+
     }
 
     /**
      * @return \Magento\Framework\Controller\Result\Raw
      */
     public function execute()
-    {  
-
+    { 
         $post = $this->getRequest()->getPostValue();
         $msg = $this->getRequest()->getPostValue('text_field');
         if ($post) {

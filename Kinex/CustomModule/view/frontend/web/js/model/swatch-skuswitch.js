@@ -9,6 +9,7 @@ define([
         var updatePrice = targetModule.prototype._UpdatePrice;
         var updatePriceWrapper = wrapper.wrap(updatePrice, function(original){
             var allSelected = true;
+
             for(var i = 0; i<this.options.jsonConfig.attributes.length;i++){
                 if (!$('div.product-info-main .product-options-wrapper .swatch-attribute.' + this.options.jsonConfig.attributes[i].code).attr('data-option-selected')){
                     allSelected = false;
@@ -18,6 +19,9 @@ define([
             var productName = this.options.jsonConfig.names[this.getProduct()];
             var productOffer = this.options.jsonConfig.offer[this.getProduct()];
             var productAvalibility = this.options.jsonConfig.availability[this.getProduct()];
+            var productQty= this.options.jsonConfig.qty[this.getProduct()];
+            var dataOptionId = $('.swatch-attribute').attr('data-option-selected');
+       
             
             if (allSelected){
                 var products = this._CalcProducts();
@@ -25,6 +29,8 @@ define([
                 productName = this.options.jsonConfig.names[products.slice().shift()];
                 productOffer = this.options.jsonConfig.offer[products.slice().shift()];
                 productAvalibility = this.options.jsonConfig.availability[products.slice().shift()];
+                productQty = this.options.jsonConfig.qty[products.slice().shift()];
+                dataOptionId = $('.swatch-attribute').attr('data-option-selected');
             }
             $('div.product-info-main .sku .value').html(productSku);
             $('div.product-info-main .page-title .base').html(productName);
@@ -43,10 +49,18 @@ define([
                 $('div.product-info-stock-sku .available>span').hide();
                 $('div.reviews-actions').html('<h2><strong>This Product is Not Available</strong></h2>').css("color", "red").show();
             }
-                  
+            if(productQty == 0)
+            {   
+                $('.swatch-option' + '[data-option-id="'+ dataOptionId +'"]').addClass('custom');
+                $('div.product-info-stock-sku .available>span').html('OUT OF STOCK');
+                $('div.product-options-bottom').hide(); 
+            }else{
+                $('div.product-info-stock-sku .available>span').html('IN STOCK');
+                $('.swatch-option' + '[data-option-id="'+ dataOptionId +'"]').removeClass('custom');
+            }   
               return original();
-        });
- 
+            });
+    
         targetModule.prototype._UpdatePrice = updatePriceWrapper;
         return targetModule;
     };

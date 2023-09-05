@@ -1,0 +1,45 @@
+<?php echo __("Here is your Tab Content."); ?>
+
+<?php
+$om = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $om->create('Magento\Customer\Model\Session');
+$customerData = $customerSession->getCustomer()->getData(); //get all data of customerData
+// $customerId = $customerSession->getCustomer()->getId();//get id of customer
+// echo $customerId;
+// dd($customerData);
+?>
+<h3><strong>Logged User Information</strong></h3>
+</br>
+<strong>Customer FullName = </strong><span> <?php echo $customerData['firstname'] . $customerData['lastname'] ?> </span>
+</br>
+</br>
+<strong>Customer Email = </strong><span> <?php echo $customerData['email'] ?></span>
+</br>
+</br>
+<h3><strong>Logged User Cart Information</strong></h3>
+</br>
+<?php
+// Get all visible items in cart
+$quote = $block->getQuoteData();
+
+foreach($quote->getAllVisibleItems() as $_item) {
+    // echo "<pre>";print_r($_item->debug());
+    echo 'ID: '.$_item->getProductId().'<br/>';
+    echo 'Name: '.$_item->getName().'<br/>';
+    echo 'Sku: '.$_item->getSku().'<br/>';
+    echo 'Quantity: '.$_item->getQty().'<br/>';
+    echo 'Price: '.$_item->getPrice().'<br/>';
+    echo 'Product Type: '.$_item->getProductType().'<br/>';
+    echo 'Discount: '.$_item->getDiscountAmount();echo "<br/>";
+    echo "<br/>";
+}
+
+// Get total items and total quantity in current cart
+echo '<b>Total Products</b> : '.$quote->getItemsCount();echo "<br/>";
+echo '<b>Total Products Quantity </b>: '.$quote->getItemsQty();echo "<br/>";
+
+//Get subtotal and grand total of customer current cart
+echo'<b>Product Subtotal</b>: '.$quote->getSubtotal();echo "<br/>";
+echo'<b>Grand Total</b>: '. $quote->getGrandTotal();echo "<br/>";
+
+?>
