@@ -1,0 +1,38 @@
+<?php
+$productId = $block->getProductId();
+$product = $block->getProductData($productId);
+$videoUrl = $product->getData('video_url');
+
+// if (str_contains($videoUrl, 'embed')) 
+// {
+//     dd('true'); 
+// } 
+?>
+<div>
+<button id="custom-button-id" class="action primary">Video</button>
+</div>
+
+<div id="popup-modal-main" style="display:none;"  role="dialog">  
+   <div class="modal-content">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body">
+        <?php if ($videoUrl): ?>
+            <?php if (str_contains($videoUrl, 'embed') || str_contains($videoUrl, 'vimeo') ):?>
+              <!-- Embed the video here using an appropriate HTML structure or a JavaScript library -->
+              <iframe width="350" height="315" src="<?= $videoUrl ?>" frameborder="0" autoplay allow="autoplay";></iframe>
+           <?php else: ?>
+                <video width="560" height="315" controls autoplay>
+                    <source src="<?= $videoUrl ?>" type="video/mp4">
+                    <source src="<?= $videoUrl ?>" type="video/webm">
+                    <source src="<?= $videoUrl ?>" type="video/ogg">
+                </video>
+           <?php endif;?>
+        <?php else:?>
+            <h3><strong>This Product does not have any video..</strong></h3>
+        <?php endif; ?>
+      </div>    
+   </div>
+</div>
+
+
