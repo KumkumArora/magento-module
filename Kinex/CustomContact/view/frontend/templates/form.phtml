@@ -19,30 +19,35 @@
             <label class="label" for="name"><span><?= $block->escapeHtml(__('Name')) ?></span></label>
             <div class="control">
                 <input name="name" id="name" title="<?= $block->escapeHtmlAttr(__('Name')) ?>" value="<?= $block->escapeHtmlAttr($this->helper('Magento\Contact\Helper\Data')->getPostValue('name') ?: $this->helper('Magento\Contact\Helper\Data')->getUserName()) ?>" class="input-text" type="text" data-validate="{required:true}"/>
+                <h5 id="namecheck" style="color: red;"></h5>
             </div>
         </div>
         <div class="field email required">
             <label class="label" for="email"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
             <div class="control">
                 <input name="email" id="email" title="<?= $block->escapeHtmlAttr(__('Email')) ?>" value="<?= $block->escapeHtmlAttr($this->helper('Magento\Contact\Helper\Data')->getPostValue('email') ?: $this->helper('Magento\Contact\Helper\Data')->getUserEmail()) ?>" class="input-text" type="email" data-validate="{required:true, 'validate-email':true}"/>
+                <h5 id="emailcheck" style="color: red;"></h5>
             </div>
         </div>
         <div class="field telephone">
             <label class="label" for="telephone"><span><?= $block->escapeHtml(__('Phone Number')) ?></span></label>
             <div class="control">
-                <input name="telephone" id="telephone" title="<?= $block->escapeHtmlAttr(__('Phone Number')) ?>" value="<?= $block->escapeHtmlAttr($this->helper('Magento\Contact\Helper\Data')->getPostValue('telephone')) ?>" class="input-text" type="text" />
+               <input name="telephone" id="telephone" title="<?= $block->escapeHtmlAttr(__('Phone Number')) ?>" value="<?= $block->escapeHtmlAttr($this->helper('Magento\Contact\Helper\Data')->getPostValue('telephone')) ?>" class="input-text" type="text" data-validate="{required:true}"/>
+               <h5 id="telephonecheck" style="color: red;"></h5>
             </div>
         </div>
         <div class="field subject required">
              <label class="label" for="subject"><span><?php /* @escapeNotVerified */ echo __('Subject') ?></span></label>
              <div class="control">
                   <input name="subject" id="subject" title="<?php /* @escapeNotVerified */ echo __('Subject') ?>" value="" class="input-text" type="text" data-validate="{required:true}"/>
+                  <h5 id="subjectcheck" style="color: red;"></h5>
              </div>
         </div>
         <div class="field comment required">
             <label class="label" for="comment"><span><?= $block->escapeHtml(__('What’s on your mind?')) ?></span></label>
             <div class="control">
                 <textarea name="comment" id="comment" title="<?= $block->escapeHtmlAttr(__('What’s on your mind?')) ?>" class="input-text" cols="5" rows="3" data-validate="{required:true}"><?= $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('comment')) ?></textarea>
+                <h5 id="commentcheck" style="color: red;"></h5>
             </div>
         </div>
         <?= $block->getChildHtml('form.additional.info') ?>
@@ -56,3 +61,129 @@
         </div>
     </div>
 </form>
+<script type="text/javascript">
+require(
+    ['jquery',],
+    function($) {
+        jQuery(document).ready(function(){   
+
+    let usernameError = true;
+    $("#name").keyup(function () {
+        validateUsername();
+    });
+ 
+    function validateUsername() {
+        let usernameValue = $("#name").val();
+        if (usernameValue.length == "") {
+        
+            $("#namecheck").html("please enter username")
+            usernameError = false;
+            return false;
+        } else if (usernameValue.length < 3 || usernameValue.length > 10) {
+            $("#namecheck").html("**length of username must be between 3 and 10");
+            usernameError = false;
+            return false;
+        } else {
+            $("#namecheck").hide();
+        }
+    }
+
+
+    let emailError = true;
+    $("#email").keyup(function () {
+        validateEmail();
+    });
+    // Validate Email
+    function validateEmail(){
+     
+        let email = $("#email").val();
+        var regex =
+        /^([_\-\.0-9a-zA-Z]+)@([_\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,7}$/;
+        if (regex.test(email)) {
+            $("#emailcheck").hide();
+        } else {
+            $("#emailcheck").html("enter valid email");
+            emailError = false;
+            return false
+        }
+    }
+    
+
+    let telephoneError = true;
+    $("#telephone").keyup(function () {
+        validateTelephone();
+    });
+ 
+    function validateTelephone() {
+        let usertelephone = $("#telephone").val();
+        var filter = /^\d*(?:\.\d{1,2})?$/;
+        if (filter.test(usertelephone)) {
+        
+       if (usertelephone.length < 10 || usertelephone.length > 10) {
+            $("#telephonecheck").html("**length of telephone must be 10 digit");
+            telephoneError = false;
+            return false;
+        } else {
+            $("#telephonecheck").hide();
+           
+        }
+      }else{
+        $("#telephonecheck").html("Not a valid number");
+        telephoneError = false;
+        return false;
+      }
+    }
+
+    let subjectError = true;
+    $("#subject").keyup(function () {
+        validateSubject();
+    });
+   
+    function validateSubject() {
+        let subject = $("#subject").val();
+        if (subject.length == "") {
+        
+            $("#subjectcheck").html("required field")
+            subjectError = false;
+            return false;
+        } else if (subject.length < 5 || subject.length > 10) {
+            $("#subjectcheck").html("**length of subject must be between 5 and 10");
+            subjectError = false;
+            return false;
+        } else {
+            $("#subjectcheck").hide();
+            $("#subject").html(subject);
+        }
+    }
+
+    let commentError = true;
+    $("#comment").keyup(function () {
+        validateComment();
+    });
+ 
+    function validateComment() {
+        let comment = $("#comment").val();
+        if (comment.length < 5) {
+            $("#commentcheck").html("**length of comment must be greater than 5");
+            commentError = false;
+            return false;
+        } else {
+            $("#commentcheck").hide();
+        }
+    }
+
+    $("form").submit(function () {
+        validateUsername()
+        validateTelephone();
+        validateSubject();
+        validateEmail();
+        validateComment();
+        return true;
+    });
+         
+       
+    });
+});
+    
+
+</script>
