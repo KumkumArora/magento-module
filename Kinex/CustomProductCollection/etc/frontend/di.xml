@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\CatalogWidget\Block\Product\ProductsList" type="Kinex\CustomProductCollection\Block\Product\ProductsList" />
+    <preference for="Magento\Catalog\Block\Product\Widget\NewWidget" type="Kinex\CustomProductCollection\Block\Product\Widget\NewWidget"/>
+    <type name="Magento\Elasticsearch7\Model\Client\Elasticsearch">
+        <plugin name="elastcisearch_filter_plugin" type="Kinex\CustomProductCollection\Plugin\ElasticLayerPlugin" />
+    </type>
+    <type name="Magento\Framework\App\Action\AbstractAction">
+    	<plugin name="customer-session-data-to-context" type="Kinex\CustomProductCollection\Plugin\CustomData"/>
+	</type>
+    <type name="\Magento\Customer\Controller\Account\LoginPost">
+        <plugin name="kinex_customproductcollection_loginpostplugin" type="\Kinex\CustomProductCollection\Plugin\LoginPostPlugin" sortOrder="1" />
+    </type>
+</config>

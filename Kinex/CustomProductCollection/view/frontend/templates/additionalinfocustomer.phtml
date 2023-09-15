@@ -1,0 +1,13 @@
+<fieldset class="fieldset create account">
+    <div class="field regulation">
+        <label for="regulation" class="label"><span><?php /* @escapeNotVerified */
+                echo __('Account Register as a') ?></span></label>
+        <div class="control">
+        <select name="register_as_a" id="register_as_a" data-validate="{required:true 'validate-select':true}">
+            <option value=""><?php echo __('Please Select')?></option>
+            <option value="buyer">Buyer</option>
+            <option value="seller">Seller</option>
+        </select>
+        </div>
+    </div>
+</fieldset>
